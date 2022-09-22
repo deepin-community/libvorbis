@@ -1,0 +1,29 @@
+#!/bin/sh
+#
+cat <<EOF
+
+Test if the segfault reported in BTS report #772877 is still present
+in the library.  See also https://trac.xiph.org/ticket/1975 .
+
+EOF
+
+set -e
+
+retval=0
+
+cd $AUTOPKGTEST_TMP
+
+# Random wav file found in the Debian archive, from sound-icons
+cp /usr/share/sounds/sound-icons/cembalo-6.wav testinput.wav
+
+bugtrigger="--advanced-encode-option disable_coupling"
+
+if valgrind oggenc -b 80 -m 80 -M 80 $bugtrigger \
+    -o out.ogg testinput.wav 2>&1 ; then
+    echo "success: oggenc ran successfully."
+else
+    echo "error: oggenc did not succeed (crash?)"
+    retval=1
+fi
+
+exit $retval

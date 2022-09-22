@@ -1,0 +1,2 @@
+Depends: @, vorbis-tools, build-essential, sound-theme-freedesktop, sound-icons, valgrind
+Tests: test-examples test-coupling-segfault

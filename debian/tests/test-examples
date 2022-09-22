@@ -1,0 +1,34 @@
+#!/bin/sh
+#
+# Try to build and run the example code.  Provide input on both stdin
+# and as first argument as the programs seem to handle either or both.
+# The goal is to verify that it is possible to link with the libvorbis
+# library and run the resulting binaries.
+
+set -e
+
+if [ -n "${DEB_HOST_GNU_TYPE:-}" ]; then
+    CC="$DEB_HOST_GNU_TYPE-gcc"
+  else
+    CC=gcc
+fi
+
+retval=0
+cd $AUTOPKGTEST_TMP
+
+# Some small ogg file, picked randomly from sound-theme-freedesktop
+cp /usr/share/sounds/freedesktop/stereo/bell.oga testinput.ogg
+
+for f in /usr/share/doc/libvorbis-dev/examples/*.c; do
+    echo "****** Testing $f ******"
+    cp $f .
+    ${CC} -o example $(basename $f) -logg -lvorbisenc -lvorbisfile -lvorbis -lm
+
+    if cat testinput.ogg | ./example testinput.ogg > testoutput 2>&1 ; then
+        echo "success running $f"
+    else
+        echo "error running $f"
+        retval=1
+    fi
+done
+exit $retval
