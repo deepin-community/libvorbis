@@ -1,2 +1,4 @@
 0001-Fix-build-failure-with-DSO-link-changes.patch
 0002-Avoid-SIGFPE-when-bytespersample-is-zero.patch
+CVE-2026-137079.patch
+CVE-2026-137078.patch
