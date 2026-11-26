@@ -1,3 +1,11 @@
+libvorbis (1.3.7-1deepin2) unstable; urgency=medium
+
+  * fix(cve): CVE-2026-137079 (medium) - Fix _ov_getlap negative-size
+    memcpy in vorbisfile   Upstream:
+    https://github.com/xiph/vorbis/pull/136
+
+ -- deepin-ci-robot <packages@deepin.org>  Thu, 26 Nov 2026 08:05:53 +0800
+
 libvorbis (1.3.7-1deepin1) unstable; urgency=medium
 
   * Rebuild with LTO enabled (dpkg vendor feature optimize/lto).
